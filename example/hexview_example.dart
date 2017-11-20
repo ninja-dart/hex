@@ -7,7 +7,5 @@ main() {
 	final view = new HexView16(5, data);
 	print(view.numRecords);
 
-	for(int i = 0; i < view.numRecords; i++) {
-		print(view[i]);
-	}
+	print(view);
 }

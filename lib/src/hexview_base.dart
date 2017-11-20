@@ -136,4 +136,14 @@ class HexView16 {
       return new Record16(startAddr, data.sublist(start, start + 16));
     }
   }
+
+  String toString() {
+    final sb = new StringBuffer();
+
+    for(int i = 0; i < numRecords; i++) {
+      sb.writeln(getRecord(i));
+    }
+
+    return sb.toString();
+  }
 }

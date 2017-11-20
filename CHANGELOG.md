@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.2
+
+- toString for HexView16
+
 ## 0.0.1
 
-- Initial version, created by Stagehand
+- HexView16 and Record16
