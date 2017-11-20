@@ -77,11 +77,11 @@ class Record16 implements Record {
 
   String toString() {
     final sb = new StringBuffer();
-    sb.write('0x' + Hex.toHex32Str(startAddress));
+    sb.write('0x' + Hex.hex32(startAddress));
     sb.write('\t');
     for (int datum in data) {
       if(datum != null) {
-        sb.write(Hex.toHex8Str(datum));
+        sb.write(Hex.hex8(datum));
       } else {
         sb.write('--');
       }

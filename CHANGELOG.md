@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.4
+
+- Reorganisation of `Hex`
+- Added `hex8List`, `hex16List`, `hex24List`, `hex32List`
+
 ## 0.0.3
 
 - Expose `Hex`
