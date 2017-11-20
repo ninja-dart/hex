@@ -1,8 +1,5 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
+/// Pretty hexadecimal view of binary data
 library hexview;
 
 export 'src/hexview_base.dart';
-
-// TODO: Export any libraries intended for clients of this package.
+export 'src/hex_conv.dart' show Hex;
