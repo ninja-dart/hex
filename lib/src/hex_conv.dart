@@ -5,30 +5,22 @@ import 'dart:math' as math;
 abstract class Hex {
   static String hex8(int data) {
     if (data < 0 || data > 255) throw Exception('Invalid data!');
-    String digits = data.toRadixString(16).toUpperCase();
-    digits = '0' * (2 - digits.length) + digits;
-    return digits;
+    return data.toRadixString(16).toUpperCase().padLeft(2, '0');
   }
 
   static String hex16(int data) {
     if (data < 0 || data > 0xFFFF) throw Exception('Invalid data!');
-    String digits = data.toRadixString(16).toUpperCase();
-    digits = '0' * (4 - digits.length) + digits;
-    return digits;
+    return data.toRadixString(16).toUpperCase().padLeft(4, '0');
   }
 
   static String hex24(int data) {
     if (data < 0 || data > 0xFFFFFF) throw Exception('Invalid data!');
-    String digits = data.toRadixString(16).toUpperCase();
-    digits = '0' * (6 - digits.length) + digits;
-    return digits;
+    return data.toRadixString(16).toUpperCase().padLeft(6, '0');
   }
 
   static String hex32(int data) {
     if (data < 0 || data > 0xFFFFFFFF) throw Exception('Invalid data!');
-    String digits = data.toRadixString(16).toUpperCase();
-    digits = '0' * (8 - digits.length) + digits;
-    return digits;
+    return data.toRadixString(16).toUpperCase().padLeft(8, '0');
   }
 
   static String hex8List(List<int> data, {String join = ' '}) =>
