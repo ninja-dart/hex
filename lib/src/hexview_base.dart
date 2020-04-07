@@ -10,7 +10,7 @@ abstract class Record {
 
   int get length;
 
-  int get endAddress => startAddress + (data.length > 0 ? data.length - 1 : 0);
+  int get endAddress => startAddress + (data.isNotEmpty ? data.length - 1 : 0);
 
   int operator [](int address);
 
@@ -21,30 +21,35 @@ abstract class Record {
 
 /// A 16 byte record
 class Record16 implements Record {
+  @override
   final int startAddress;
 
   /// The data. [null] value means unknown.
+  @override
   final List<int> data;
 
+  @override
   int get length => 16;
 
+  @override
   int get endAddress => startAddress + 15;
 
   Record16._(this.startAddress, this.data);
 
   Record16(this.startAddress, List<int> data)
-      : data = new List<int>.from(data, growable: false) {
-    if (startAddress & 0xF != 0)
-      throw new Exception('Start address must be in 16-byte boundary!');
-    if (data.length != 16) throw new Exception('Data length must be 16!');
+      : data = List<int>.from(data, growable: false) {
+    if (startAddress & 0xF != 0) {
+      throw Exception('Start address must be in 16-byte boundary!');
+    }
+    if (data.length != 16) throw Exception('Data length must be 16!');
   }
 
   factory Record16.adjust(int startAddress, List<int> data) {
-    if(data.length > 16) throw new ArgumentError.value(data, 'data', 'Invalid length!');
+    if(data.length > 16) throw ArgumentError.value(data, 'data', 'Invalid length!');
 
     final int corAddr = startAddress & ~0xF;
 
-    final d = new List<int>(16);
+    final d = List<int>(16);
     int i = 0;
 
     // Fill facing nulls
@@ -57,26 +62,32 @@ class Record16 implements Record {
       i++;
     }
 
-    return new Record16._(corAddr, d);
+    return Record16._(corAddr, d);
   }
 
+  @override
   int operator [](int address) {
-    if (address < startAddress || address > endAddress)
-      throw new RangeError.range(address, startAddress, endAddress, 'address');
+    if (address < startAddress || address > endAddress) {
+      throw RangeError.range(address, startAddress, endAddress, 'address');
+    }
 
     return data[address - startAddress];
   }
 
+  @override
   operator []=(int address, int value) {
-    if (address < startAddress || address > endAddress)
-      throw new RangeError.range(address, startAddress, endAddress, 'address');
+    if (address < startAddress || address > endAddress) {
+      throw RangeError.range(address, startAddress, endAddress, 'address');
+    }
     data[address - startAddress] = value;
   }
 
-  Record16 withOffset(int offset) => new Record16(startAddress + offset, data);
+  @override
+  Record16 withOffset(int offset) => Record16(startAddress + offset, data);
 
+  @override
   String toString() {
-    final sb = new StringBuffer();
+    final sb = StringBuffer();
     sb.write('0x' + Hex.hex32(startAddress));
     sb.write('\t');
     for (int datum in data) {
@@ -103,7 +114,7 @@ class HexView16 {
 
   int get length => data.length;
 
-  int get endAddress => startAddress + (data.length > 0 ? data.length - 1 : 0);
+  int get endAddress => startAddress + (data.isNotEmpty ? data.length - 1 : 0);
 
   int get numRecords {
     final int alignSA = startAddress & ~0xF;
@@ -118,7 +129,7 @@ class HexView16 {
 
   Record16 getRecord(int recNum) {
     if (recNum < 0 || recNum >= numRecords) {
-      throw new RangeError.range(recNum, 0, numRecords - 1, 'recNum');
+      throw RangeError.range(recNum, 0, numRecords - 1, 'recNum');
     }
 
     if(recNum == 0) {
@@ -126,19 +137,20 @@ class HexView16 {
       if(length > 16) {
         end = ((startAddress + 16) & ~0xF) - startAddress;
       }
-      return new Record16.adjust(startAddress, data.sublist(0, end));
+      return Record16.adjust(startAddress, data.sublist(0, end));
     } else if(recNum == (numRecords - 1)) {
       final int start = (endAddress & ~0xF) - startAddress;
-      return new Record16.adjust(endAddress & ~0xF, data.sublist(start, length));
+      return Record16.adjust(endAddress & ~0xF, data.sublist(start, length));
     } else {
       final int startAddr = (startAddress & ~0xF) + (recNum * 16);
       final int start = startAddr - startAddress;
-      return new Record16(startAddr, data.sublist(start, start + 16));
+      return Record16(startAddr, data.sublist(start, start + 16));
     }
   }
 
+  @override
   String toString() {
-    final sb = new StringBuffer();
+    final sb = StringBuffer();
 
     for(int i = 0; i < numRecords; i++) {
       sb.writeln(getRecord(i));

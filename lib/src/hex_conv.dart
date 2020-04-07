@@ -4,43 +4,43 @@ import 'dart:math' as math;
 
 abstract class Hex {
   static String hex8(int data) {
-    if (data < 0 || data > 255) throw new Exception('Invalid data!');
+    if (data < 0 || data > 255) throw Exception('Invalid data!');
     String digits = data.toRadixString(16).toUpperCase();
     digits = '0' * (2 - digits.length) + digits;
     return digits;
   }
 
   static String hex16(int data) {
-    if (data < 0 || data > 0xFFFF) throw new Exception('Invalid data!');
+    if (data < 0 || data > 0xFFFF) throw Exception('Invalid data!');
     String digits = data.toRadixString(16).toUpperCase();
     digits = '0' * (4 - digits.length) + digits;
     return digits;
   }
 
   static String hex24(int data) {
-    if (data < 0 || data > 0xFFFFFF) throw new Exception('Invalid data!');
+    if (data < 0 || data > 0xFFFFFF) throw Exception('Invalid data!');
     String digits = data.toRadixString(16).toUpperCase();
     digits = '0' * (6 - digits.length) + digits;
     return digits;
   }
 
   static String hex32(int data) {
-    if (data < 0 || data > 0xFFFFFFFF) throw new Exception('Invalid data!');
+    if (data < 0 || data > 0xFFFFFFFF) throw Exception('Invalid data!');
     String digits = data.toRadixString(16).toUpperCase();
     digits = '0' * (8 - digits.length) + digits;
     return digits;
   }
 
-  static String hex8List(List<int> data, {String join: ' '}) =>
+  static String hex8List(List<int> data, {String join = ' '}) =>
       data.map(hex8).join(join);
 
-  static String hex16List(List<int> data, {String join: ' '}) =>
+  static String hex16List(List<int> data, {String join = ' '}) =>
       data.map(hex16).join(join);
 
-  static String hex24List(List<int> data, {String join: ' '}) =>
+  static String hex24List(List<int> data, {String join = ' '}) =>
       data.map(hex24).join(join);
 
-  static String hex32List(List<int> data, {String join: ' '}) =>
+  static String hex32List(List<int> data, {String join = ' '}) =>
       data.map(hex32).join(join);
 }
 
@@ -53,7 +53,7 @@ abstract class UInt {
     } else if (data >= 97 && data <= 102) {
       return 10 + data - 97;
     } else {
-      throw new Exception('Not valid hex $data!');
+      throw Exception('Not valid hex $data!');
     }
   }
 
@@ -102,12 +102,12 @@ abstract class UInt {
   static int byte3(int data) => (data >> 24) & 0xFF;
 
   static List<int> bytes2(int data) =>
-      new List<int>()..add(byte1(data))..add(byte0(data));
+      <int>[]..add(byte1(data))..add(byte0(data));
 
   static List<int> bytes3(int data) =>
-      new List<int>()..add(byte2(data))..add(byte1(data))..add(byte0(data));
+      <int>[]..add(byte2(data))..add(byte1(data))..add(byte0(data));
 
-  static List<int> bytes4(int data) => new List<int>()
+  static List<int> bytes4(int data) => <int>[]
     ..add(byte3(data))
     ..add(byte2(data))
     ..add(byte1(data))

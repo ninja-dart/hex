@@ -7,9 +7,9 @@ void main() {
     setUp(() {});
 
     test('Simple1', () {
-      final nums = new List<int>.generate(125, (i) => i + 5);
-      final data = new Uint8List.fromList(nums);
-      final view = new HexView16(5, data);
+      final nums = List<int>.generate(125, (i) => i + 5);
+      final data = Uint8List.fromList(nums);
+      final view = HexView16(5, data);
       expect(view.numRecords, 9);
 
       for (int i = 0; i < view.numRecords; i++) {
@@ -20,9 +20,9 @@ void main() {
     });
 
     test('Simple2', () {
-      final nums = new List<int>.generate(128, (i) => i);
-      final data = new Uint8List.fromList(nums);
-      final view = new HexView16(0, data);
+      final nums = List<int>.generate(128, (i) => i);
+      final data = Uint8List.fromList(nums);
+      final view = HexView16(0, data);
       expect(view.numRecords, 8);
 
       for (int i = 0; i < view.numRecords; i++) {

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
++ Ported to Dart2
+
 ## 0.0.4
 
 - Reorganisation of `Hex`

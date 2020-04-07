@@ -6,7 +6,7 @@ void main() {
     setUp(() {});
 
     test('General', () {
-      final rec = new Record16(16, new List<int>.generate(16, (i) => i));
+      final rec = Record16(16, List<int>.generate(16, (i) => i));
       expect(rec.length, 16);
       expect(rec.startAddress, 16);
       expect(rec.endAddress, 31);
@@ -16,7 +16,7 @@ void main() {
     });
 
     test('With offset', () {
-      final rec1 = new Record16(48, new List<int>.generate(16, (i) => i + 48));
+      final rec1 = Record16(48, List<int>.generate(16, (i) => i + 48));
       final rec = rec1.withOffset(16);
       expect(rec.length, 16);
       expect(rec.startAddress, 64);
@@ -28,14 +28,14 @@ void main() {
 
     test('Misaligned', () {
 	    expect(() {
-		    new Record16(17, new List<int>.generate(16, (i) => i));
-	    }, throwsA(new isInstanceOf<Exception>()));
+		    Record16(17, List<int>.generate(16, (i) => i));
+	    }, throwsA(isA<Exception>()));
     });
 
     test('Mis length', () {
 	    expect(() {
-		    new Record16(16, new List<int>.generate(15, (i) => i));
-	    }, throwsA(new isInstanceOf<Exception>()));
+		    Record16(16, List<int>.generate(15, (i) => i));
+	    }, throwsA(isA<Exception>()));
     });
   });
 }
