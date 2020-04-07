@@ -1,6 +1,6 @@
 name: hexview
 description: Pretty print byte array as hexadecimal view
-version: 2.0.1
+version: 2.0.2
 homepage: https://github.com/tejainece/hexview.dart
 
 environment:
