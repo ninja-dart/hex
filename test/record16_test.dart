@@ -1,4 +1,4 @@
-import 'package:hexview/hexview.dart';
+import 'package:ninja_hex/ninja_hex.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -6,7 +6,7 @@ void main() {
     setUp(() {});
 
     test('General', () {
-      final rec = Record16(16, List<int>.generate(16, (i) => i));
+      final rec = Record(16, List<int>.generate(16, (i) => i));
       expect(rec.length, 16);
       expect(rec.startAddress, 16);
       expect(rec.endAddress, 31);
@@ -16,7 +16,7 @@ void main() {
     });
 
     test('With offset', () {
-      final rec1 = Record16(48, List<int>.generate(16, (i) => i + 48));
+      final rec1 = Record(48, List<int>.generate(16, (i) => i + 48));
       final rec = rec1.withOffset(16);
       expect(rec.length, 16);
       expect(rec.startAddress, 64);
@@ -27,15 +27,15 @@ void main() {
     });
 
     test('Misaligned', () {
-	    expect(() {
-		    Record16(17, List<int>.generate(16, (i) => i));
-	    }, throwsA(isA<Exception>()));
+      expect(() {
+        Record(17, List<int>.generate(16, (i) => i));
+      }, throwsA(isA<Exception>()));
     });
 
     test('Mis length', () {
-	    expect(() {
-		    Record16(16, List<int>.generate(15, (i) => i));
-	    }, throwsA(isA<Exception>()));
+      expect(() {
+        Record(16, List<int>.generate(15, (i) => i));
+      }, throwsA(isA<Exception>()));
     });
   });
 }
