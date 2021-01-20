@@ -7,8 +7,7 @@ pubspec.lock
 
 # Directory created by dartdoc
 doc/api/
+.idea
+hexview.iml
 
 .dart_tool
-
-.idea
-*.iml
