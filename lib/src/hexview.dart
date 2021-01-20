@@ -18,6 +18,8 @@ class Record {
       data = <int>[...List<int>(size - data.length), ...data];
 
       startAddress -= data.length - size;
+    } else {
+      data = data.toList();
     }
 
     return Record(startAddress, data);
@@ -28,6 +30,8 @@ class Record {
       data = <int>[...data, ...List<int>(size - data.length)];
 
       startAddress -= data.length - size;
+    } else {
+      data = data.toList();
     }
 
     return Record(startAddress, data);
