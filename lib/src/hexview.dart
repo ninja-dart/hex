@@ -90,7 +90,7 @@ class DefaultRecordFormatter implements AbsRecordFormatter {
     }
 
     final sb = StringBuffer();
-    sb.write('0x' + Hex.hex16(record.startAddress));
+    sb.write('0x' + Hex.hex32(record.startAddress));
     sb.write('\t');
     for (int datum in record.data) {
       if (datum != null) {
