@@ -11,9 +11,9 @@ void main() {
   final random = Random();
   final data = List<int>.generate(20, (index) => random.nextInt(256));
   print(data);
-  final encoded = hexEncode(data);
+  final encoded = data.toHex;
   print(encoded);
-  final decoded = hexDecode(encoded);
+  final decoded = encoded.decodeHex;
   print(decoded);
 }
 ```
@@ -24,6 +24,19 @@ void main() {
 void main() {
 	print(hexView(5, List<int>.generate(125, (i) => i + 5)));
 }
+```
+
+Output:
+```
+0x00000005	-- -- -- -- -- 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+0x00000015	10 11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F 
+0x00000025	20 21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F 
+0x00000035	30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F 
+0x00000045	40 41 42 43 44 45 46 47 48 49 4A 4B 4C 4D 4E 4F 
+0x00000055	50 51 52 53 54 55 56 57 58 59 5A 5B 5C 5D 5E 5F 
+0x00000065	60 61 62 63 64 65 66 67 68 69 6A 6B 6C 6D 6E 6F 
+0x00000075	70 71 72 73 74 75 76 77 78 79 7A 7B 7C 7D 7E 7F 
+0x00000085	80 81 -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 ```
 
 ## BigInt from hex

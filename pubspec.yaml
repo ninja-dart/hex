@@ -1,15 +1,15 @@
 name: ninja_hex
 description: Dart library to encode, decode and pretty print hex string
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/ninja-dart/hex
 
 documentation:
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.15.0 <3.0.0'
 
 dependencies:
 
 dev_dependencies:
-  test: ^1.17.3
-  pedantic: ^1.11.0
+  test: ^1.20.1
+  pedantic: ^1.11.1

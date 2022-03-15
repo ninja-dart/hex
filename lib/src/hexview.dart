@@ -52,11 +52,11 @@ class Record {
   @override
   String toString() {
     final sb = StringBuffer();
-    sb.write('0x' + Hex.hex32(startAddress));
+    sb.write('0x' + startAddress.hex32);
     sb.write('\t');
     for (int? datum in data) {
       if (datum != null) {
-        sb.write(Hex.hex8(datum));
+        sb.write(datum.hex8);
       } else {
         sb.write('--');
       }
@@ -78,17 +78,18 @@ class DefaultRecordFormatter implements HexRecordFormatter {
   @override
   final int recordLength;
 
+  @override
   String format(Record record, {int? fullDataEndAddress}) {
     if (record.length != recordLength) {
       throw Exception('Record should be of length $recordLength');
     }
 
     final sb = StringBuffer();
-    sb.write('0x' + Hex.hex32(record.startAddress));
+    sb.write('0x' + record.startAddress.hex32);
     sb.write('\t');
     for (int? datum in record.data) {
       if (datum != null) {
-        sb.write(Hex.hex8(datum));
+        sb.write(datum.hex8);
       } else {
         sb.write('--');
       }
