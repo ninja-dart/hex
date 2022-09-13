@@ -1,11 +1,10 @@
 import 'hex_conv.dart';
 
-/// A 16 byte record
 class Record {
   final int startAddress;
 
   /// The data. [null] value means unknown.
-  final List<int> data;
+  final List<int?> data;
 
   int get endAddress => startAddress + data.length - 1;
 
@@ -13,31 +12,31 @@ class Record {
 
   Record(this.startAddress, this.data);
 
-  factory Record.prefix(int startAddress, Iterable<int> data, int size) {
+  factory Record.prefix(int startAddress, Iterable<int?> data, int size) {
     if (data.length != size) {
-      data = <int>[...List<int>(size - data.length), ...data];
+      data = <int?>[...List<int?>.filled(size - data.length, null), ...data];
 
       startAddress -= data.length - size;
     } else {
       data = data.toList();
     }
 
-    return Record(startAddress, data);
+    return Record(startAddress, data.toList());
   }
 
-  factory Record.suffix(int startAddress, Iterable<int> data, int size) {
+  factory Record.suffix(int startAddress, Iterable<int?> data, int size) {
     if (data.length != size) {
-      data = <int>[...data, ...List<int>(size - data.length)];
+      data = <int?>[...data, ...List<int?>.filled(size - data.length, null)];
 
       startAddress -= data.length - size;
     } else {
       data = data.toList();
     }
 
-    return Record(startAddress, data);
+    return Record(startAddress, data.toList());
   }
 
-  int operator [](int address) {
+  int? operator [](int address) {
     if (address < startAddress || address > endAddress) {
       throw RangeError.range(address, startAddress, endAddress, 'address');
     }
@@ -57,11 +56,11 @@ class Record {
   @override
   String toString() {
     final sb = StringBuffer();
-    sb.write('0x' + Hex.hex32(startAddress));
+    sb.write('0x' + startAddress.hex32);
     sb.write('\t');
-    for (int datum in data) {
+    for (int? datum in data) {
       if (datum != null) {
-        sb.write(Hex.hex8(datum));
+        sb.write(datum.hex8);
       } else {
         sb.write('--');
       }
@@ -75,7 +74,7 @@ class Record {
 abstract class AbsRecordFormatter {
   int get recordLength;
 
-  String format(Record record, {int fullDataEndAddress});
+  String format(Record record, {int? fullDataEndAddress});
 }
 
 class DefaultRecordFormatter implements AbsRecordFormatter {
@@ -84,17 +83,18 @@ class DefaultRecordFormatter implements AbsRecordFormatter {
   @override
   final int recordLength;
 
-  String format(Record record, {int fullDataEndAddress}) {
+  @override
+  String format(Record record, {int? fullDataEndAddress}) {
     if (record.length != recordLength) {
       throw Exception('Record should be of length $recordLength');
     }
 
     final sb = StringBuffer();
-    sb.write('0x' + Hex.hex32(record.startAddress));
+    sb.write('0x' + record.startAddress.hex32);
     sb.write('\t');
-    for (int datum in record.data) {
+    for (int? datum in record.data) {
       if (datum != null) {
-        sb.write(Hex.hex8(datum));
+        sb.write(datum.hex8);
       } else {
         sb.write('--');
       }

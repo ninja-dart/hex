@@ -25,17 +25,5 @@ void main() {
         expect(rec[i + 64], i + 48);
       }
     });
-
-    test('Misaligned', () {
-      expect(() {
-        Record(17, List<int>.generate(16, (i) => i));
-      }, throwsA(isA<Exception>()));
-    });
-
-    test('Mis length', () {
-      expect(() {
-        Record(16, List<int>.generate(15, (i) => i));
-      }, throwsA(isA<Exception>()));
-    });
   });
 }

@@ -2,38 +2,45 @@ library hexview.hex.conv;
 
 import 'dart:math' as math;
 
-abstract class Hex {
-  static String hex8(int data) {
-    if (data < 0 || data > 255) throw Exception('Invalid data!');
-    return data.toRadixString(16).toUpperCase().padLeft(2, '0');
+extension IntHexExt on int {
+  String get hex8 {
+    if (this < 0 || this > 255) throw Exception('Invalid data!');
+    return toRadixString(16).toUpperCase().padLeft(2, '0');
   }
 
-  static String hex16(int data) {
-    if (data < 0 || data > 0xFFFF) throw Exception('Invalid data!');
-    return data.toRadixString(16).toUpperCase().padLeft(4, '0');
+  String get hex16 {
+    if (this < 0 || this > 0xFFFF) throw Exception('Invalid data!');
+    return toRadixString(16).toUpperCase().padLeft(4, '0');
   }
 
-  static String hex24(int data) {
-    if (data < 0 || data > 0xFFFFFF) throw Exception('Invalid data!');
-    return data.toRadixString(16).toUpperCase().padLeft(6, '0');
+  String get hex24 {
+    if (this < 0 || this > 0xFFFFFF) throw Exception('Invalid data!');
+    return toRadixString(16).toUpperCase().padLeft(6, '0');
   }
 
-  static String hex32(int data) {
-    if (data < 0 || data > 0xFFFFFFFF) throw Exception('Invalid data!');
-    return data.toRadixString(16).toUpperCase().padLeft(8, '0');
+  String get hex32 {
+    if (this < 0 || this > 0xFFFFFFFF) throw Exception('Invalid data!');
+    return toRadixString(16).toUpperCase().padLeft(8, '0');
   }
 
-  static String hex8List(List<int> data, {String join = ' '}) =>
-      data.map(hex8).join(join);
+  int get byte0 => this & 0xFF;
 
-  static String hex16List(List<int> data, {String join = ' '}) =>
-      data.map(hex16).join(join);
+  int get byte1 => (this >> 8) & 0xFF;
 
-  static String hex24List(List<int> data, {String join = ' '}) =>
-      data.map(hex24).join(join);
+  int get byte2 => (this >> 16) & 0xFF;
 
-  static String hex32List(List<int> data, {String join = ' '}) =>
-      data.map(hex32).join(join);
+  int get byte3 => (this >> 24) & 0xFF;
+
+  List<int> get bytes2 => [byte1, byte0];
+  List<int> get bytes3 => [byte2, byte1, byte0];
+  List<int> get bytes4 => [byte3, byte2, byte1, byte0];
+}
+
+extension HexListExt on Iterable<int> {
+  String toHex8List({String join = ' '}) => map((e) => e.hex8).join(join);
+  String toHex16List({String join = ' '}) => map((e) => e.hex16).join(join);
+  String toHex24List({String join = ' '}) => map((e) => e.hex24).join(join);
+  String toHex32List({String join = ' '}) => map((e) => e.hex32).join(join);
 }
 
 abstract class UInt {
@@ -84,26 +91,6 @@ abstract class UInt {
     data |= toUint8(data1, data0);
     return data;
   }
-
-  static int byte0(int data) => data & 0xFF;
-
-  static int byte1(int data) => (data >> 8) & 0xFF;
-
-  static int byte2(int data) => (data >> 16) & 0xFF;
-
-  static int byte3(int data) => (data >> 24) & 0xFF;
-
-  static List<int> bytes2(int data) =>
-      <int>[]..add(byte1(data))..add(byte0(data));
-
-  static List<int> bytes3(int data) =>
-      <int>[]..add(byte2(data))..add(byte1(data))..add(byte0(data));
-
-  static List<int> bytes4(int data) => <int>[]
-    ..add(byte3(data))
-    ..add(byte2(data))
-    ..add(byte1(data))
-    ..add(byte0(data));
 }
 
 abstract class Math {

@@ -6,8 +6,8 @@ void main() {
   final random = Random();
   final data = List<int>.generate(20, (index) => random.nextInt(256));
   print(data);
-  final encoded = hexEncode(data);
+  final encoded = data.toHex;
   print(encoded);
-  final decoded = hexDecode(encoded);
+  final decoded = encoded.decodeHex;
   print(decoded);
 }

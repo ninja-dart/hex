@@ -48,3 +48,11 @@ const hexCodec = HexCodec();
 Uint8List hexDecode(String input) => hexDecoder.convert(input);
 
 String hexEncode(Iterable<int> input) => hexEncoder.convert(input);
+
+extension HexDecodeExt on String {
+  Uint8List get decodeHex => hexDecode(this);
+}
+
+extension HexEncodeExt on Iterable<int> {
+  String get toHex => hexEncode(this);
+}
